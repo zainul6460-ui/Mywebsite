@@ -2,122 +2,146 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AJ Store</title>
-<link rel="icon" href="https://i.imgur.com/8Km9tLL.png">
-<link rel="apple-touch-icon" href="https://i.imgur.com/8Km9tLL.png">
-<meta name="theme-color" content="#000000">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AJ Fighter</title>
 <style>
 body{
 margin:0;
-font-family:Arial;
-background:#0f0f0f;
-color:white;
-}
-
-header{
 background:black;
-padding:20px;
-text-align:center;
-font-size:30px;
-font-weight:bold;
-color:#25D366;
-box-shadow:0 2px 10px rgba(0,0,0,0.5);
-}
-
-.tag{
-text-align:center;
-padding:10px;
-color:#ccc;
-font-size:14px;
-}
-
-.box{
-background:#1c1c1c;
-margin:15px;
-padding:15px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 0 10px rgba(255,255,255,0.05);
-}
-
-img{
-width:100%;
-border-radius:12px;
-height:220px;
-object-fit:cover;
-}
-
-h3{
-margin:10px 0 5px;
-}
-
-.price{
-color:#25D366;
-font-size:20px;
-font-weight:bold;
-}
-
-button{
-background:#25D366;
 color:white;
-border:none;
-padding:12px 18px;
+font-family:Arial;
+text-align:center;
+overflow:hidden;
+}
+#game{
+position:relative;
+width:100%;
+height:80vh;
+background:#111;
+overflow:hidden;
+}
+#player{
+position:absolute;
+bottom:20px;
+left:45%;
+width:50px;
+height:50px;
+background:red;
 border-radius:10px;
-font-size:16px;
+}
+.enemy{
+position:absolute;
+top:0;
+width:40px;
+height:40px;
+background:lime;
+border-radius:50%;
+}
+.bullet{
+position:absolute;
+width:8px;
+height:20px;
+background:yellow;
+}
+.controls{
 margin-top:10px;
 }
-
-footer{
-text-align:center;
-padding:20px;
-color:#aaa;
-font-size:14px;
+button{
+padding:15px 25px;
+font-size:18px;
+margin:5px;
+border:none;
+border-radius:10px;
+background:red;
+color:white;
+}
+#score{
+font-size:22px;
+padding:10px;
 }
 </style>
 </head>
-
 <body>
 
-<header>AJ Store</header>
+<h1>AJ Fighter 🔥</h1>
+<div id="score">Score: 0</div>
 
-<div class="tag">
-Clothes | Home Decoration | Lunch Box | Bottles
+<div id="game">
+<div id="player"></div>
 </div>
 
-<div class="box">
-<img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518">
-<h3>Premium T-Shirt</h3>
-<div class="price">₹499</div>
-<a href="https://wa.me/917600519870"><button>Order on WhatsApp</button></a>
+<div class="controls">
+<button onclick="moveLeft()">⬅️</button>
+<button onclick="shoot()">🔫 Shoot</button>
+<button onclick="moveRight()">➡️</button>
 </div>
 
-<div class="box">
-<img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1">
-<h3>Lunch Box</h3>
-<div class="price">₹299</div>
-<a href="https://wa.me/917600519870"><button>Order on WhatsApp</button></a>
-</div>
+<script>
+let game=document.getElementById("game");
+let player=document.getElementById("player");
+let score=0;
+let playerX=45;
 
-<div class="box">
-<img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8">
-<h3>Water Bottle</h3>
-<div class="price">₹199</div>
-<a href="https://wa.me/917600519870"><button>Order on WhatsApp</button></a>
-</div>
+function moveLeft(){
+if(playerX>0){playerX-=5; player.style.left=playerX+"%";}
+}
 
-<div class="box">
-<img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85">
-<h3>Home Decoration</h3>
-<div class="price">₹599</div>
-<a href="https://wa.me/917600519870"><button>Order on WhatsApp</button></a>
-</div>
+function moveRight(){
+if(playerX<90){playerX+=5; player.style.left=playerX+"%";}
+}
 
-<footer>
-Contact: 7600519870 <br>
-© AJ Store
-</footer>
+function shoot(){
+let bullet=document.createElement("div");
+bullet.className="bullet";
+bullet.style.left=(player.offsetLeft+20)+"px";
+bullet.style.bottom="70px";
+game.appendChild(bullet);
+
+let b=setInterval(()=>{
+bullet.style.bottom=(parseInt(bullet.style.bottom)+10)+"px";
+
+document.querySelectorAll(".enemy").forEach(enemy=>{
+if(
+bullet.offsetTop<enemy.offsetTop+40 &&
+bullet.offsetLeft<enemy.offsetLeft+40 &&
+bullet.offsetLeft+8>enemy.offsetLeft
+){
+enemy.remove();
+bullet.remove();
+score++;
+document.getElementById("score").innerHTML="Score: "+score;
+clearInterval(b);
+}
+});
+
+if(parseInt(bullet.style.bottom)>600){
+bullet.remove();
+clearInterval(b);
+}
+},30);
+}
+
+function createEnemy(){
+let enemy=document.createElement("div");
+enemy.className="enemy";
+enemy.style.left=Math.random()*90+"%";
+game.appendChild(enemy);
+
+let e=setInterval(()=>{
+enemy.style.top=(enemy.offsetTop+4)+"px";
+
+if(enemy.offsetTop>500){
+alert("Game Over 😢 Final Score: "+score);
+location.reload();
+clearInterval(e);
+}
+
+if(!enemy.isConnected){clearInterval(e);}
+},50);
+}
+
+setInterval(createEnemy,1200);
+</script>
 
 </body>
 </html>
