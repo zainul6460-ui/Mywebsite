@@ -1,22 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Website</title>
+<title>AJ Store</title>
 <style>
 body{
 font-family:Arial;
+margin:0;
+padding:0;
+background:#111;
+color:white;
 text-align:center;
-background:#f2f2f2;
-padding:50px;
 }
-h1{color:#333;}
-p{color:#666;}
+header{
+background:black;
+padding:20px;
+font-size:30px;
+font-weight:bold;
+}
+p{
+color:#ccc;
+}
+.product{
+background:#222;
+margin:20px;
+padding:15px;
+border-radius:10px;
+}
+button{
+background:#25D366;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:5px;
+font-size:16px;
+}
+img{
+width:200px;
+border-radius:10px;
+}
 </style>
 </head>
+
 <body>
 
-<h1>Welcome to My Website</h1>
-<p>This is my first GitHub website</p>
+<header>AJ Store</header>
+<p>Clothes | Home Decoration | Lunch Box | Bottles</p>
+
+<div class="product">
+<h2>Stylish T-Shirt</h2>
+<p>₹499</p>
+<button onclick="window.location.href='https://wa.me/917600519870?text=I want Stylish T-Shirt'">Order on WhatsApp</button>
+</div>
+
+<div class="product">
+<h2>Lunch Box</h2>
+<p>₹299</p>
+<button onclick="window.location.href='https://wa.me/917600519870?text=I want Lunch Box'">Order on WhatsApp</button>
+</div>
+
+<div class="product">
+<h2>Water Bottle</h2>
+<p>₹199</p>
+<button onclick="window.location.href='https://wa.me/917600519870?text=I want Water Bottle'">Order on WhatsApp</button>
+</div>
+
+<div class="product">
+<h2>Home Decoration Item</h2>
+<p>₹599</p>
+<button onclick="window.location.href='https://wa.me/917600519870?text=I want Home Decoration Item'">Order on WhatsApp</button>
+</div>
 
 </body>
 </html>
